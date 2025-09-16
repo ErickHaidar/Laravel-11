@@ -15,6 +15,6 @@ class Employee extends Model
         'tanggal_masuk', 
         'status', 
 
-        
+    
     ];
 }
