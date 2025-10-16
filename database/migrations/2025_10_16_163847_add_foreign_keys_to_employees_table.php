@@ -17,7 +17,7 @@ return new class extends Migration {
 
             $table->foreign('departemen_id')
                 ->references('id')
-                ->on('departemens')
+                ->on('departments')
                 ->onDelete('cascade');
 
             $table->foreign('jabatan_id')
