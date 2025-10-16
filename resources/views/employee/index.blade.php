@@ -40,7 +40,7 @@
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
+                                    <button type="submit" onclick="return confirm('Yakin ingin menghapus?')">Delete</button>    
                                 </form>
                             </td>
                         </tr>
