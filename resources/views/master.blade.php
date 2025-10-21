@@ -1,30 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UTS App Pegawai</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body class="bg-light">
 
-<head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'App Pegawai')</title>
-</head>
-
-<body>
-    <header>
-        <h1>@yield('page-title', 'App Pegawai')</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ url('/employee') }}">Employee</a></li>
-                <li><a href="{{ url('/department') }}">Department</a></li>
-                <li><a href="{{ url('/attendance') }}">Attendance</a></li>
-                <li><a href="{{ url('/report') }}">Report</a></li>
-                <li><a href="{{ url('/settings') }}">Settings</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="{{ route('employees.index') }}">APP-PEGAWAI</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('employees.index') }}">Pegawai</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('departments.index') }}">Departemen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('positions.index') }}">Jabatan</a>
+            </li>
+            <li class_exists("nav-item")>
+              <a class="nav-link" href="{{ route('salaries.index') }}">Gaji</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('attendances.index') }}">Absensi</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-4">
         @yield('content')
-    </main>
-    <footer>
-        <p>&copy; {{ date('Y') }} App Pegawai</p>
-    </footer>
-</body>
-
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
 </html>

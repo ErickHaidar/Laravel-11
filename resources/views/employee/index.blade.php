@@ -1,55 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('master')
 
-<head>
-</head>
+@section('content')
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Data Pegawai</h5>
+        <a href="{{ route('employees.create') }}" class="btn btn-primary btn-sm">
+            + Tambah Pegawai
+        </a>
+    </div>
+    <div class="card-body">
+        
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
 
-<body>
-    @extends('master')
-    @section('title', 'Daftar Pegawai')
-    @section('content')
-        <div class="container mt-5">
-            <h1 class="mb-4">Daftar Pegawai</h1>
-            <table border="1" cellpadding="5" cellspacing="0">
-                <thead>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
                     <tr>
-                        <th>Nama Lengkap</th>
-                        <th>Email</th>
-                        <th>Nomor Telepon</th>
-                        <th>Tanggal Lahir</th>
-                        <th>Alamat</th>
-                        <th>Tanggal Masuk</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama Lengkap</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Departemen</th>
+                        <th scope="col">Jabatan</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($employees as $employee)
+                    @forelse ($employees as $index => $emp)
                         <tr>
-                            <td>{{ $employee->nama_lengkap }}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->nomor_telepon }}</td>
-                            <td>{{ $employee->tanggal_lahir }}</td>
-                            <td>{{ $employee->alamat }}</td>
-                            <td>{{ $employee->tanggal_masuk }}</td>
-                            <td>{{ $employee->status }}</td>
+                            <th scope="row">{{ $index + $employees->firstItem() }}</th>
+                            <td>{{ $emp->nama_lengkap }}</td>
+                            <td>{{ $emp->email }}</td>
+                            <td>{{ $emp->department->nama_departemen ?? 'N/A' }}</td>
+                            <td>{{ $emp->position->nama_jabatan ?? 'N/A' }}</td>
                             <td>
-                                <a href="{{ route('employees.show', $employee->id) }}">Detail</a> |
-                                <a href="{{ route('employees.edit', $employee->id) }}">Edit</a> |
-                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST"
-                                    style="display:inline;">
+                                @if($emp->status == 'aktif')
+                                    <span class="badge bg-success">Aktif</span>
+                                @else
+                                    <span class="badge bg-danger">Non-Aktif</span>
+                                @endif
+                            </td>
+                            <td>
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" 
+                                      action="{{ route('employees.destroy', $emp->id) }}" method="POST">
+                                    
+                                    <a href="{{ route('employees.show', $emp->id) }}" class="btn btn-info btn-sm">SHOW</a>
+                                    <a href="{{ route('employees.edit', $emp->id) }}" class="btn btn-warning btn-sm">EDIT</a>
+                                    
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Yakin ingin menghapus?')">Delete</button>    
+                                    <button type="submit" class="btn btn-danger btn-sm">HAPUS</button>
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                <div class="alert alert-danger">
+                                    Data pegawai belum tersedia.
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-    @endsection
-    
-</body>
-
-</html>
+        
+        {{ $employees->links('pagination::bootstrap-5') }}
+    </div>
+</div>
+@endsection
